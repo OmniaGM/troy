@@ -149,8 +149,8 @@ class DeleteStatementParserTest extends FlatSpec with Matchers {
 
   }
 
-  it should "parse IN tuple of UUID" ignore {
-    val statement = parseQuery("DELETE phone FROM Users WHERE userid IN (C73DE1D3, B70DE1D0);").asInstanceOf[DeleteStatement]
+  it should "parse IN tuple of UUID" in {
+    val statement = parseQuery("DELETE phone FROM Users WHERE userid IN (C73DE1D3-AF08-40F3-B124-3FF3E5109F22, B70DE1D0-9908-4AE3-BE34-5573E5B09F14);").asInstanceOf[DeleteStatement]
     statement.simpleSelection.isDefined shouldBe true
     statement.simpleSelection.get.size shouldBe 1
     statement.simpleSelection.get(0).asInstanceOf[ColumnNameSelection].columnName shouldBe "phone"
@@ -165,8 +165,8 @@ class DeleteStatementParserTest extends FlatSpec with Matchers {
     simpleRelation.operator shouldBe Operator.In
     val literal: TupleLiteral = simpleRelation.term.asInstanceOf[TupleLiteral]
     literal.values.size shouldBe 2
-    literal.values(0) shouldBe Constant("C73DE1D3")
-    literal.values(1) shouldBe Constant("B70DE1D0")
+    literal.values(0) shouldBe Constant("C73DE1D3-AF08-40F3-B124-3FF3E5109F22")
+    literal.values(1) shouldBe Constant("B70DE1D0-9908-4AE3-BE34-5573E5B09F14")
 
   }
 }
